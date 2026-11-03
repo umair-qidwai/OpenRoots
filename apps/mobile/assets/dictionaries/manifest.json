@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "books": [
+    {
+      "id": "lane",
+      "title": "An Arabic-English Lexicon — Lane",
+      "author": "Edward William Lane",
+      "license": "CC-BY-SA-3.0-US",
+      "sourceUrl": "https://github.com/alpheios-project/lan/tree/7dd04e1182c13a4b0883978867d2a3b04616542a",
+      "entryCount": 49473,
+      "passageCount": 55668
+    }
+  ],
+  "entryCount": 49473,
+  "passageCount": 55668
+}

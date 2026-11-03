@@ -1,0 +1,26 @@
+{
+  "target": "actual exported app / isolated Chromium via Playwright",
+  "checks": [
+    "startup_and_home",
+    "mobile_home_no_horizontal_overflow",
+    "home_search_real_dictionary",
+    "original_entry_and_attribution",
+    "bookmark_written",
+    "bookmark_survives_full_reload",
+    "home_displays_real_bookmark",
+    "translation_source_and_exact_subset_editor",
+    "citation_highlights_actual_passage",
+    "comparison_retrieval_and_truthful_missing_credentials",
+    "library_real_count_and_license",
+    "arabic_dark_mobile_layout",
+    "language_and_theme_survive_full_reload"
+  ],
+  "screenshots": [
+    "home-mobile.png",
+    "dictionary-mobile.png",
+    "saved-mobile.png",
+    "settings-arabic-dark.png"
+  ],
+  "screenshotErrors": [],
+  "scope": "No native-device or real inference claim."
+}

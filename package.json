@@ -1,0 +1,23 @@
+{
+  "name": "openroots",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "prepare:assets": "node apps/mobile/scripts/prepare-assets.mjs",
+    "postinstall": "npm run prepare:assets",
+    "start": "npm run start -w @openroots/mobile",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}

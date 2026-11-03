@@ -1,0 +1,103 @@
+[
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/sqlite/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/securestore/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/filesystem/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/font/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/clipboard/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/dev-client/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/build-properties/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/status-bar/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/asset/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/constants/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/versions/latest/sdk/linking/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://docs.expo.dev/router/introduction/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://reactnative.dev/docs/text",
+    "status": 200,
+    "bytes": 106203
+  },
+  {
+    "url": "https://react.dev/reference/react/useSyncExternalStore",
+    "status": 200,
+    "bytes": 284243
+  },
+  {
+    "url": "https://github.com/mybigday/llama.rn",
+    "status": 200,
+    "bytes": 615867
+  },
+  {
+    "url": "https://docs.expo.dev/build/introduction/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://github.com/google/fonts/tree/main/ofl/notonaskharabic",
+    "status": 200,
+    "bytes": 255271
+  },
+  {
+    "url": "https://www.typescriptlang.org/docs/",
+    "status": 200,
+    "bytes": 173643
+  },
+  {
+    "url": "https://eslint.org/docs/latest/",
+    "status": 200,
+    "bytes": 72378
+  },
+  {
+    "url": "https://github.com/privatenumber/tsx",
+    "status": 200,
+    "bytes": 255361
+  },
+  {
+    "url": "https://necolas.github.io/react-native-web/docs/",
+    "status": 200,
+    "bytes": 32532
+  },
+  {
+    "url": "https://appandflow.github.io/react-native-safe-area-context/",
+    "status": 200,
+    "bytes": 502
+  },
+  {
+    "url": "https://docs.swmansion.com/react-native-screens/",
+    "error": "HTTP Error 403: Forbidden"
+  }
+]

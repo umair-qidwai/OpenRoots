@@ -1,0 +1,49 @@
+arabic-lexicon — data attributions and licenses
+================================================
+
+The Python source code in this repository is released under the MIT License
+(see LICENSE). The dictionary DATA bundled here is licensed separately, as
+follows. If you redistribute this repository or a derivative, you must keep
+these attributions.
+
+------------------------------------------------------------------------------
+Lane's Lexicon  (lane-xml/)
+------------------------------------------------------------------------------
+Edward William Lane, "An Arabic-English Lexicon" (London, 1863–1893).
+The underlying work is in the public domain.
+
+Digital TEI XML text via the Perseus Digital Library and the corrected
+"Lane's Lexicon" project (https://laneslexicon.github.io/), whose XML is
+distributed under the Creative Commons Attribution-ShareAlike license
+(CC BY-SA). Because this data is ShareAlike, any redistribution of the
+Lane portion (including derivatives) must remain under CC BY-SA and credit
+Perseus / the Lane's Lexicon project.
+
+------------------------------------------------------------------------------
+Lisān al-ʿArab  (lisan-text/)
+------------------------------------------------------------------------------
+Ibn Manẓūr (d. 711 AH / 1311 CE), "Lisān al-ʿArab."
+The underlying work is in the public domain.
+
+>>> TODO: confirm and record the exact digital-edition source of the plain-text
+>>> Lisān used here, and any license it carries, before public release.
+
+------------------------------------------------------------------------------
+Optional dictionaries — NOT included in this repository
+------------------------------------------------------------------------------
+The build script also supports the following, which are intentionally NOT
+bundled here:
+
+  * 12 pre-modern Arabic dictionaries (al-ʿAyn, Tahdhīb, al-Ṣiḥāḥ, Maqāyīs,
+    al-Mukhaṣṣaṣ, al-Mufradāt, Asās al-Balāgha, Mukhtār al-Ṣiḥāḥ, al-Miṣbāḥ,
+    al-Qāmūs, Tāj al-ʿArūs, Jamharat al-Lugha) — texts are public domain; the
+    digital editions come from the OpenITI corpus (https://openiti.org),
+    generally CC BY-SA / CC BY-NC-SA. Fetch them yourself if you want them.
+
+  * Joshua Blau, "A Dictionary of Mediaeval Judaeo-Arabic Texts" (Jerusalem,
+    2006) — IN COPYRIGHT. Not distributed. Bring your own copy.
+
+  * Mordechai Akiva Friedman, "A Dictionary of Medieval Judeo-Arabic..."
+    (Ben-Zvi Institute, 2016) — IN COPYRIGHT. Not distributed. Bring your own.
+
+See README.md → "Optional dictionaries" for how to add these locally.

@@ -1,0 +1,618 @@
+# Build a Production-Quality Classical Arabic Dictionary & AI App
+
+## Objective
+
+Build a complete, beautiful, fast, cross-platform mobile application for researching Classical Arabic, similar in functionality to https://ghareeb.app/.
+
+The application should work on:
+
+- iPhone 15 Pro (iOS)
+- OnePlus 15 (Android)
+
+Use React Native, Expo, and TypeScript.
+
+The application must support BOTH:
+
+1. **Cloud AI:** Cloudflare Workers AI using a powerful multilingual model.
+2. **Local AI:** A downloaded GGUF model running entirely on the phone through llama.rn, without internet access or API costs.
+
+Users must be able to switch between both modes from the app.
+
+This is a serious application intended for real use, not a demo, mockup, or UI-only prototype.
+
+Create an original identity and interface. Do not copy Ghareeb's branding, proprietary code, assets, or exact visual design.
+
+Work autonomously. Research documentation, install compatible dependencies, implement features, run tests, and fix errors. Do not stop after scaffolding or creating mock screens.
+
+Only request my involvement for credentials, device signing, licensing decisions, or other actions genuinely requiring user interaction.
+
+## 1. Technology stack
+
+Use:
+
+- Expo SDK 58 (or the latest compatible stable SDK already installed)
+- React Native with TypeScript in strict mode
+- Expo Router for navigation
+- expo-sqlite with FTS5 support for offline dictionary storage
+- expo-file-system for downloading dictionary/model data
+- expo-secure-store for user-provided authentication secrets
+- llama.rn for native on-device inference
+- Cloudflare Workers with an AI binding for cloud inference
+- Python for importing and processing Arabic dictionaries
+- An appropriate lightweight state management solution
+- Reusable TypeScript interfaces and a modular architecture
+
+Use real native development builds, not Expo Go, for local AI testing.
+
+Check the current documentation of every package before implementation.
+
+Organize the project into clearly separated mobile app, Cloudflare backend, data ingestion, and shared code.
+
+## 2. Design and user experience
+
+Design an elegant, highly polished Arabic research application.
+
+Visual direction:
+
+- Premium academic/reference application
+- Warm ivory or off-white background in light mode
+- Rich charcoal text
+- Restrained forest-green accent color
+- Beautiful Arabic typography using a properly licensed Arabic font, preferably Noto Naskh Arabic
+- Clean English typography
+- Exceptional spacing and visual hierarchy
+- Comfortable reading experience for long Arabic definitions
+- Native-feeling animations and transitions
+- Subtle borders, tasteful cards, and consistent corner radii
+- Excellent light and dark themes
+
+Avoid generic AI-generated dashboard aesthetics, excessive gradients, glassmorphism, crowded cards, decorative emojis, and random colors.
+
+The interface should feel thoughtfully designed and suitable for serious students of Arabic.
+
+Support Arabic and English throughout the app.
+
+Arabic text must display properly with full right-to-left layout, connected letter shapes, diacritics, text selection, and correct bidirectional rendering when English and Arabic appear together.
+
+### Main screens
+
+**Home**
+
+A beautiful landing page with an immediately accessible search field.
+
+Show quick actions for:
+- Dictionary search
+- Ask AI
+- Compare words
+- Translate Arabic
+
+Include recent searches and bookmarked entries.
+
+**Dictionary**
+
+Search Arabic words, roots, and transliteration.
+
+Allow users to:
+- Select dictionaries
+- Browse original Arabic text
+- View full entries
+- Search within entries
+- Copy text
+- Save bookmarks
+- Open citations
+- Adjust Arabic text size
+- Switch between original and normalized search results
+
+**Smart AI**
+
+A conversational interface for Arabic linguistic questions.
+
+Place a simple Cloud / Local selector near the top.
+
+Show the active model and its online/offline status.
+
+Display generated answers in structured sections with clickable source citations.
+
+**Library**
+
+Browse books by dictionary, grammar, morphology, Qur'anic studies, and other available categories.
+
+Only show categories with actual imported source material.
+
+**Saved**
+
+Bookmarks, saved explanations, and search history stored locally.
+
+**Settings**
+
+- Cloud or Local AI selection
+- Cloud model selection
+- Local model management
+- Download progress and storage usage
+- Language selection
+- Arabic text size
+- Appearance
+- Data source information
+- Licenses and attribution
+- Clear saved data
+- Privacy information
+
+All navigation, buttons, and interactions must actually function.
+
+## 3. Source material and dictionary database
+
+This is one of the most important parts of the entire application.
+
+Do NOT rely on the language model's internal knowledge as the primary dictionary.
+
+Build a real, searchable database of classical Arabic texts.
+
+### Starting data source
+
+Investigate this open-source project first:
+
+https://github.com/eliyahu-freedman/arabic-lexicon
+
+It contains:
+- Lisān al-ʿArab
+- Lane's Arabic-English Lexicon
+- A SQLite indexing pipeline
+- Full-text search and Arabic root lookup
+- Support for importing additional dictionaries
+
+Read its README, LICENSE, NOTICE, and build_index.py carefully.
+
+Determine whether its code or data can legally be incorporated, then reuse or adapt the permitted components.
+
+Preserve all applicable licensing and attribution requirements.
+
+### Additional sources
+
+Investigate:
+
+https://github.com/OpenITI/RELEASE
+
+https://github.com/OpenITI
+
+https://github.com/laneslexicon/lexicon_xml
+
+https://github.com/laneslexicon/LexiconDatabase
+
+Prioritize these classical works when available in usable, properly licensed digital formats:
+
+1. Lisān al-ʿArab
+2. Lane's Arabic-English Lexicon
+3. Al-Mufradāt fī Gharīb al-Qurʾān
+4. Mukhtār al-Ṣiḥāḥ
+5. Kitāb al-ʿAyn
+6. Maqāyīs al-Lugha
+7. Al-Qāmūs al-Muḥīṭ
+8. Tāj al-ʿArūs
+
+Import additional grammar, morphology, and Qur'anic reference books only after the primary dictionary system is working.
+
+Prefer original machine-readable text, XML, JSON, or structured corpora over PDFs.
+
+Do not download scanned PDFs unless no better source exists.
+
+You may download publicly accessible, authorized source files yourself using command-line tools.
+
+Do not scrape protected websites, bypass access restrictions, or redistribute works without suitable rights.
+
+IMPORTANT: OpenITI's CC BY-NC-SA 4.0 license restricts commercial use. Respect its conditions and do not silently incorporate restricted content into a commercially distributed build.
+
+Maintain a `SOURCE_MANIFEST.md` documenting:
+- Book title
+- Author
+- Source URL
+- Digital edition
+- License
+- Attribution
+- Import status
+- Entry count
+- Known limitations
+
+If a source cannot be verified or imported legally, document the problem and skip it rather than inventing data.
+
+## 4. Data ingestion and storage
+
+Create a reproducible Python ingestion pipeline.
+
+For each source:
+1. Download or read the original source.
+2. Parse its structure.
+3. Preserve the original Arabic text.
+4. Extract headings, roots, dictionary entries, and source metadata where available.
+5. Segment long entries into searchable passages.
+6. Normalize Arabic into separate search fields.
+7. Generate stable entry and passage IDs.
+8. Produce a SQLite database.
+9. Build full-text and root-based indexes.
+10. Validate imports and record errors.
+
+Support:
+- Arabic diacritic-insensitive searching
+- Hamza/alif normalization in search fields
+- Arabic root lookup
+- Exact entry lookup
+- Prefix and substring search where practical
+- Arabic and English query text
+- Book-specific filters
+
+Preserve the original text exactly for display.
+
+Do not confuse approximate stemming with authoritative root extraction.
+
+For morphology, investigate MIT-licensed or otherwise compatible tools such as CAMeL Tools or PySarf. Verify compatibility and accuracy before selecting one.
+
+If multiple roots are possible, display alternatives rather than confidently choosing an incorrect one.
+
+Design the database so additional books can be added without rewriting the application.
+
+Initially bundle a practical, genuinely searchable dataset with the app. For larger collections, support optional offline downloads.
+
+## 5. AI architecture
+
+Create a shared AI provider interface.
+
+For example:
+
+`AIProvider.generate(question, retrievedPassages, options)`
+
+Implement two providers:
+- CloudflareAIProvider
+- LocalAIProvider
+
+Both must consume the same retrieval results and return the same structured answer format.
+
+Switching models should not require reloading the application or losing conversation history.
+
+Each AI answer must be grounded in retrieved source passages.
+
+### Retrieval pipeline
+
+When a user asks a question:
+
+1. Analyze the question and identify relevant Arabic words or roots.
+2. Search the real dictionary database.
+3. Retrieve relevant passages from multiple sources.
+4. Rank the passages.
+5. Select a compact, high-quality context.
+6. Send that context to the selected AI provider.
+7. Generate an explanation.
+8. Validate cited source IDs.
+9. Display the answer with clickable citations.
+
+Start with deterministic lexical and root search.
+
+Do not add a complicated embeddings infrastructure unless it demonstrably improves retrieval.
+
+Later, support hybrid semantic retrieval if needed.
+
+### Citation accuracy
+
+This requirement is non-negotiable.
+
+Each source passage must have a stable identifier.
+
+The model should reference only the supplied passage IDs.
+
+The application must validate all citations against the retrieval results.
+
+Every clickable citation must open the actual source passage, with the relevant text highlighted.
+
+Include book title, author, dictionary entry/root, and edition/page information where genuinely available.
+
+Never invent quotations, source passages, page numbers, or reference IDs.
+
+Clearly distinguish:
+- Original Arabic source text
+- AI translation
+- AI interpretation
+
+If the sources do not support an answer, the AI must say so.
+
+## 6. Cloudflare AI implementation
+
+Use Cloudflare Workers AI.
+
+Default model:
+
+`@cf/qwen/qwen3-30b-a3b-fp8`
+
+Also support, where available on the free plan:
+
+`@cf/google/gemma-4-26b-a4b-it`
+
+Consult the current Cloudflare documentation:
+
+https://developers.cloudflare.com/workers-ai/
+
+Create a Cloudflare Worker that receives validated question/context requests and calls the model using an AI binding.
+
+Do not expose Cloudflare API tokens or account credentials in the mobile application.
+
+Store secrets server-side only.
+
+Do not leave an unrestricted public inference endpoint that anyone can abuse.
+
+For a personal-use prototype, implement a simple secure access mechanism with credentials configured by the user, not hardcoded into the app.
+
+Structure the backend so real user authentication and per-user quotas can be added before public release.
+
+Implement:
+- Streaming when supported
+- Request validation
+- Input-size limits
+- Output token limits
+- Timeouts
+- Network error handling
+- Appropriate rate limits
+- Quota-exceeded handling
+- Model availability detection
+- Clear retry controls
+
+Keep requests efficient.
+
+Use retrieved passages rather than entire books.
+
+Target short-to-medium explanations by default.
+
+The goal is to fit within Cloudflare's free Workers AI allocation of 10,000 neurons per day.
+
+Do not enable paid usage automatically.
+
+When the free quota is exceeded, display a friendly message and offer switching to Local AI.
+
+Create a Wrangler configuration and a complete backend deployment README.
+
+## 7. Local AI implementation
+
+Use:
+
+https://github.com/mybigday/llama.rn
+
+Starting model:
+
+https://huggingface.co/ggml-org/Qwen3-4B-GGUF
+
+Prefer its Q4_K_M quantization, subject to actual device compatibility and benchmarking.
+
+The model must run directly on the iPhone or Android device.
+
+It must NOT require:
+- A server
+- An internet connection after download
+- API keys
+- AI credits
+- Subscriptions
+
+Implement a model manager.
+
+Features:
+- Download model from a trusted source
+- Show total size before download
+- Show download progress
+- Handle interrupted downloads safely
+- Verify model integrity using a known checksum
+- Store the model in app-managed storage
+- Load and unload the model
+- Delete downloaded models
+- Show available storage
+- Warn when free memory/storage is insufficient
+- Handle background/foreground transitions
+- Avoid overlapping expensive inference requests
+
+Use Metal acceleration on supported iOS devices.
+
+Investigate suitable Android acceleration through llama.rn; use safe CPU fallback where GPU acceleration is unsupported or unstable.
+
+Optimize context length, memory, and generation parameters for phone hardware.
+
+Keep the downloaded model separate from the app bundle so users do not need to download several gigabytes during installation.
+
+Offer automatic fallback to Local AI when cloud service is unavailable, but only if a model has been installed.
+
+Make offline dictionary browsing and local AI genuinely work in airplane mode.
+
+Do not provide a simulated local-AI mode or silently send local questions to a cloud API.
+
+## 8. AI prompting and answer quality
+
+Create a carefully designed system prompt for a Classical Arabic research assistant.
+
+The assistant should:
+- Understand Arabic and English questions
+- Explain Classical Arabic accurately
+- Translate source passages into natural English
+- Explain roots, morphology, usage, and semantic differences
+- Compare related Arabic words
+- Cite the actual dictionary passages provided
+- Differentiate literal translation from interpretation
+- Preserve important linguistic nuances
+- Admit uncertainty
+- Avoid fabricating references or unsupported religious interpretations
+
+Suggested answer structure:
+
+**Word / root**
+
+Arabic spelling, transliteration, root, and grammatical information when supported.
+
+**Meaning**
+
+Concise English explanation.
+
+**Classical usage**
+
+Details supported by the dictionaries.
+
+**Related words**
+
+Relevant forms and differences.
+
+**Sources**
+
+Clickable references to original passages.
+
+For comparison questions, show a side-by-side or clearly separated explanation.
+
+Do not make every answer unnecessarily long.
+
+Support concise and detailed answer modes.
+
+## 9. Translation tools
+
+Add a dedicated translation experience.
+
+Users should be able to:
+- Select Arabic text from a dictionary
+- Tap Translate
+- Choose Cloud or Local AI
+- Receive a clear English translation
+- View the original Arabic alongside it
+- Copy or save the translation
+
+Preserve source attribution.
+
+Mark translations as AI-generated.
+
+For long entries, support translating selected passages rather than overwhelming the model with the entire entry.
+
+## 10. Persistence and offline functionality
+
+Store locally:
+- Bookmarks
+- Search history
+- Saved explanations
+- Settings
+- Active AI provider
+- Model metadata
+- Downloaded dictionaries
+
+No account should be required for the personal-use application.
+
+Dictionary search must work offline.
+
+Local AI must work offline.
+
+Cloud AI must indicate when internet access is required.
+
+Persist relevant user data across application restarts.
+
+Avoid collecting unnecessary analytics or transmitting dictionary/search history without permission.
+
+## 11. Testing and quality assurance
+
+Use actual data rather than placeholder dictionary entries.
+
+Test words including:
+
+- كتب
+- علم
+- رحمة
+- صبر
+- خوف
+- خشية
+- تقوى
+- غفر
+- هدى
+- نور
+
+Test questions including:
+
+- What is the root of استغفار?
+- What is the difference between خوف and خشية?
+- Explain the Classical Arabic meaning of تقوى.
+- Translate this original Lisān al-ʿArab passage.
+- Compare رحمة and رأفة.
+- Find relevant entries for صبر.
+
+Validate:
+- Root search accuracy
+- Arabic normalization
+- RTL rendering
+- Text selection
+- Real dictionary citations
+- Comparison questions
+- Cloud model responses
+- Local model responses
+- Provider switching
+- Model downloading
+- Offline mode
+- Error handling
+- Persistent bookmarks and history
+- Long passages
+- Low-memory behavior
+- Android/iOS compatibility
+
+Run TypeScript type checking, linting, unit tests, and relevant build checks.
+
+Test ingestion separately from the mobile UI.
+
+Do not claim physical-device testing if no device is available.
+
+## 12. Development execution plan
+
+Build in this order:
+
+**Phase 1 — Real database and core application**
+
+Set up the project, establish architecture, import permitted dictionary content, create SQLite indexes, implement real dictionary lookup, and finish a polished navigable interface.
+
+**Phase 2 — Cloud AI**
+
+Implement the Cloudflare Worker, retrieval pipeline, source-grounded responses, clickable citations, and translations.
+
+**Phase 3 — Local AI**
+
+Integrate llama.rn, model downloads, on-device inference, and offline functionality.
+
+**Phase 4 — Polish and verification**
+
+Complete provider switching, settings, bookmarks, dark mode, Arabic typography, animations, error states, and device build configuration.
+
+Do not build a fake UI first and defer the core functionality indefinitely.
+
+After each phase, run available tests, correct failures, and proceed.
+
+If external credentials, legal approvals, or physical-device access prevent completion, finish everything else that can genuinely be implemented and document the exact remaining actions.
+
+## 13. Deliverables
+
+Provide:
+
+1. Complete React Native/Expo source code.
+2. Working searchable Arabic dictionary database or a reproducible import process with actual verified data.
+3. Cloudflare Worker source code.
+4. Functional local AI provider.
+5. Working Cloud/Local switching.
+6. Downloadable model management.
+7. Clickable real-source citations.
+8. Python data ingestion pipeline.
+9. Source manifests, licenses, and attribution.
+10. Complete README with setup, testing, and deployment instructions.
+11. Example environment file without secrets.
+12. Android build instructions and configuration.
+13. iOS build instructions and configuration.
+14. Automated tests and a truthful report of what passed.
+15. A list of known limitations and any manual steps I must complete.
+
+## 14. Definition of done
+
+The app is considered complete only when:
+
+- I can search real Arabic dictionary data without AI.
+- I can open and read the original source entries.
+- I can ask Cloudflare AI questions grounded in that data.
+- I can download and run an actual local GGUF model.
+- I can switch between Cloud and Local AI.
+- Both modes can cite the original source passages.
+- The app works without internet in Local mode.
+- My saved data persists.
+- The interface looks polished and professional.
+- The codebase is organized, documented, and ready for native builds.
+
+Prioritize correctness, real functionality, useful Arabic scholarship, and design quality over superficial feature count.
+
+Begin by inspecting the current repository, reviewing the relevant documentation and the existing arabic-lexicon project, then implement the application. Do not stop after presenting a plan.

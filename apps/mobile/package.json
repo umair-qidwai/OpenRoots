@@ -1,0 +1,52 @@
+{
+  "name": "@openroots/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "tsx --test --test-concurrency=1 tests/*.test.ts src/ai/*.test.ts"
+  },
+  "dependencies": {
+    "@expo/log-box": "~58.0.14",
+    "@expo/metro-runtime": "~58.0.16",
+    "@openroots/local-integrity": "file:./plugins/openroots-integrity",
+    "@openroots/shared": "*",
+    "expo": "58.0.22",
+    "expo-asset": "~58.0.19",
+    "expo-build-properties": "~58.0.12",
+    "expo-clipboard": "~58.0.4",
+    "expo-constants": "~58.0.14",
+    "expo-dev-client": "~58.0.18",
+    "expo-device": "~58.0.4",
+    "expo-file-system": "~58.0.13",
+    "expo-font": "~58.0.11",
+    "expo-linking": "~58.0.15",
+    "expo-router": "~58.0.29",
+    "expo-secure-store": "~58.0.2",
+    "expo-sqlite": "~58.0.15",
+    "expo-status-bar": "~58.0.4",
+    "expo-system-ui": "~58.0.7",
+    "llama.rn": "^0.13.0-rc.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.1",
+    "react-native-web": "~0.21.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "~19.3.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~58.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "~6.0.3"
+  }
+}

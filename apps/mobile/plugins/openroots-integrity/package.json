@@ -1,0 +1,1 @@
+{"name":"@openroots/local-integrity","version":"1.0.0","private":true,"description":"Bounded-memory native SHA-256 for private GGUF files","license":"MIT","peerDependencies":{"expo":"*","react-native":"*"}}

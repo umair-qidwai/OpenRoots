@@ -1,0 +1,4 @@
+# Server-side local development only. Never copy to mobile/EXPO_PUBLIC settings.
+# ACCESS_TOKEN intentionally empty: missing credentials fail closed.
+# Set to a random 32–256 printable non-space ASCII credential in .dev.vars.
+ACCESS_TOKEN=
