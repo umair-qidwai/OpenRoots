@@ -114,4 +114,4 @@ npm ci
 
 Then rebuild through Xcode/Android as above. Keep the same Apple Bundle Identifier and Android signing key for updates. Avoid rerunning `prebuild --clean` after manually setting up local signing unless you are prepared to restore those settings.
 
-Official references: Apple's Personal Team/account guide (`developer.apple.com/help/account/basics/about-your-developer-account`), Expo local development (`docs.expo.dev/guides/local-app-development/`) and APK installation (`docs.expo.dev/build-reference/apk/`). More detail and acceptance checks: `docs/MOBILE.md` and `docs/VERIFICATION.md`.
+Official references: Apple's Personal Team/account guide (`developer.apple.com/support/compare-memberships/`), Expo local development (`docs.expo.dev/guides/local-app-development/`) and APK installation (`docs.expo.dev/build-reference/apk/`). More detail and acceptance checks: `docs/MOBILE.md` and `docs/VERIFICATION.md`.
