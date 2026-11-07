@@ -1,0 +1,70 @@
+name: Android test APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-test-apk
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build standalone ARM64 APK
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Set up Java
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Make room for native dependencies
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android/sdk/ndk
+          df -h .
+      - name: Install locked dependencies and verify dictionary
+        run: npm ci --no-audit --no-fund
+      - name: Verify source
+        run: |
+          npm run typecheck
+          npm run lint
+          npm test
+      - name: Generate Android native project
+        working-directory: apps/mobile
+        run: npx expo prebuild --no-install --platform android
+      - name: Build standalone test APK
+        working-directory: apps/mobile/android
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon --max-workers=2
+      - name: Stage APK and integrity report
+        run: |
+          mkdir -p apk-output
+          cp apps/mobile/android/app/build/outputs/apk/release/app-release.apk apk-output/OpenRoots-android-arm64.apk
+          cd apk-output
+          sha256sum OpenRoots-android-arm64.apk > SHA256SUMS.txt
+          printf 'Source commit: %s\nStandalone ARM64 Android test build. No Metro server needed.\nTest signing only; not a Play Store production release.\nNative compilation does not claim physical-device or real-inference acceptance.\n' "$GITHUB_SHA" > BUILD.txt
+      - name: Upload APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: OpenRoots-android-arm64
+          path: apk-output/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
